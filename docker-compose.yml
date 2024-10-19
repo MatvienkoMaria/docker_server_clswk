@@ -1,0 +1,22 @@
+services:
+  docker-server-clswk:
+    container_name: "docker-server-clswk"
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - DATABASE_URL=jdbc:postgresql://cats-db-clswk:5432/cats_db_clswk
+      - SERVER_PORT=8080
+      - DATASOURCE_USERNAME=user
+      - DATASOURCE_PASSWORD=password
+    depends_on:
+      - cats-db-clswk
+
+  cats-db-clswk:
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=cats_db_clswk
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5432:5432"
